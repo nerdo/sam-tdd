@@ -1,32 +1,32 @@
 /* global describe, test, expect */
 
-import { View, State, Model, Actions, Engine } from './index'
+import { Presenter, Supervisor, Model, Actions, Engine } from './index'
 
 describe('counter', () => {
   test('incrementing', () => {
-    const view = new View()
-    const state = new State()
+    const presenter = new Presenter()
+    const supervisor = new Supervisor()
     const model = new Model()
     const actions = new Actions()
 
-    state.setView(view)
-    model.setState(state)
+    supervisor.setPresenter(presenter)
+    model.setSupervisor(supervisor)
     actions.setModel(model)
 
-    state.render(model)
-    expect(view.representation).toBe(0)
+    supervisor.process(model)
+    expect(presenter.state).toBe(0)
 
     actions.increment()
-    expect(view.representation).toBe(1)
+    expect(presenter.state).toBe(1)
   })
 
   test('incrementing, using the engine', () => {
-    const engine = new Engine(new View(), new State(), new Model(), new Actions())
+    const engine = new Engine(new Presenter(), new Supervisor(), new Model(), new Actions())
 
     engine.start()
-    expect(engine.view.representation).toBe(0)
+    expect(engine.presenter.state).toBe(0)
 
     engine.actions.increment()
-    expect(engine.view.representation).toBe(1)
+    expect(engine.presenter.state).toBe(1)
   })
 })

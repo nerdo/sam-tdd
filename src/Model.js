@@ -7,8 +7,8 @@ export class Model {
     this.present = this.present.bind(this)
   }
 
-  setState (state) {
-    this.state = state
+  setSupervisor (supervisor) {
+    this.supervisor = supervisor
   }
 
   present (change = { counter: 0 }) {
@@ -16,6 +16,6 @@ export class Model {
       this.data.counter = change.counter
     }
 
-    this.state.render(this)
+    this.supervisor.process(this)
   }
 }

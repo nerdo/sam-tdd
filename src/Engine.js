@@ -1,15 +1,15 @@
 export class Engine {
-  constructor (view, state, model, actions) {
-    this.view = view
-    this.state = state
+  constructor (presenter, supervisor, model, actions) {
+    this.presenter = presenter
+    this.supervisor = supervisor
     this.model = model
     this.actions = actions
   }
 
   start () {
-    this.state.setView(this.view)
-    this.model.setState(this.state)
+    this.supervisor.setPresenter(this.presenter)
+    this.model.setSupervisor(this.supervisor)
     this.actions.setModel(this.model)
-    this.state.render(this.model)
+    this.supervisor.process(this.model)
   }
 }

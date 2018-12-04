@@ -1,5 +1,5 @@
-export * from './View'
-export * from './State'
+export * from './Presenter'
+export * from './Supervisor'
 export * from './Model'
 export * from './Actions'
 export * from './Engine'
