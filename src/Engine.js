@@ -7,9 +7,9 @@ export class Engine {
   }
 
   start () {
-    this.state.setView(view)
-    this.model.setState(state)
-    this.actions.setModel(model)
-    this.state.render(model)
+    this.state.setView(this.view)
+    this.model.setState(this.state)
+    this.actions.setModel(this.model)
+    this.state.render(this.model)
   }
 }
