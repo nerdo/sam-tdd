@@ -17,5 +17,8 @@ describe('ModelInterface conformance', () => {
 
       expect(() => model.setSupervisor(null)).not.toThrow()
       expect(model.getSupervisor()).toBe(null)
+
+      expect(() => model.setMutator(null)).not.toThrow()
+      expect(model.getMutator()).toBe(null)
     })
 })
