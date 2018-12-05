@@ -5,9 +5,9 @@ export class Model {
     }
   }
 
-  setSupervisor (supervisor) {
-    this.supervisor = supervisor
-  }
+  setSupervisor (supervisor) { this.supervisor = supervisor }
+
+  getSupervisor () { return this.supervisor }
 
   present (change) {
     if (typeof change.counter !== 'undefined') {

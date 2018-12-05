@@ -6,7 +6,7 @@ import { MutableGetSet } from '../../adapters/MutableGetSet'
 
 setupCustomMatchers(expect)
 
-describe('GetSetInterface', () => {
+describe('GetSetInterface conformance', () => {
   describe.each`
     concreteImplementationName | newInstance
     ${'MutableGetSet'}         | ${() => new MutableGetSet()}

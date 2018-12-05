@@ -1,7 +1,7 @@
 export class Supervisor {
-  setPresenter (presenter) {
-    this.presenter = presenter
-  }
+  setPresenter (presenter) { this.presenter = presenter }
+
+  getPresenter () { return this.presenter }
 
   process (model) {
     this.digest(model)

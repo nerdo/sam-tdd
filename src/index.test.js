@@ -24,9 +24,9 @@ describe('counter', () => {
     const engine = new Engine(new Presenter(), new Supervisor(), new Model(), new Actions())
 
     engine.start()
-    expect(engine.presenter.state).toBe(0)
+    expect(engine.getPresenter().state).toBe(0)
 
     engine.actions.increment()
-    expect(engine.presenter.state).toBe(1)
+    expect(engine.getPresenter().state).toBe(1)
   })
 })

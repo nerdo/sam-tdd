@@ -6,6 +6,12 @@ export class ModelInterface {
   setSupervisor (supervisor) { throw new Error('Not Yet Implemented') }
 
   /**
+   * Gets the supervisor.
+   * @returns {SupervisorInterface}
+   */
+  getSupervisor () { throw new Error('Not Yet Implemented') }
+
+  /**
    * Presents a change to the model.
    * @param {mixed} change
    */

@@ -6,6 +6,12 @@ export class SupervisorInterface {
   setPresenter (presenter) { throw new Error('Not Yet Implemented') }
 
   /**
+   * Gets the presenter.
+   * @returns {PresenterInterface}
+   */
+  getPresenter () { throw new Error('Not Yet Implemented') }
+
+  /**
    * Processes the model.
    * @param {ModelInterface} model
    */
