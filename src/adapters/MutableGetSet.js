@@ -17,7 +17,7 @@ export class MutableGetSet {
       }
     }
 
-    return typeof lastKey === 'undefined' ? defaultValue : result[lastKey]
+    return result[lastKey]
   }
 
   set (obj, path, value) {

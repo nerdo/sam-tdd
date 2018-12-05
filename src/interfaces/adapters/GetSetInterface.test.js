@@ -1,8 +1,8 @@
 /* global describe, test, expect */
-import { setupCustomMatchers } from '../helpers/jest'
-import { GetSetInterface } from '../interfaces/adapters'
-import { ImmutableGetSet } from './ImmutableGetSet'
-import { MutableGetSet } from './MutableGetSet'
+import { setupCustomMatchers } from '../../helpers/jest'
+import { GetSetInterface } from '.'
+import { ImmutableGetSet } from '../../adapters/ImmutableGetSet'
+import { MutableGetSet } from '../../adapters/MutableGetSet'
 
 setupCustomMatchers(expect)
 
@@ -87,7 +87,7 @@ describe('GetSetInterface', () => {
         }
         const gs = newInstance()
 
-        const result = gs.set(obj, [], { replacement: true })
+        const result = gs.set(obj, void 0, { replacement: true })
 
         expect(result).toEqual({ replacement: true })
       })
