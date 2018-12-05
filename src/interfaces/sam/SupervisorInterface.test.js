@@ -1,7 +1,7 @@
 /* global describe, test, expect */
 import { setupCustomMatchers } from '../../helpers/jest'
-import { Supervisor, Presenter } from '../../sam'
-import { SupervisorInterface, PresenterInterface } from './'
+import { Supervisor } from '../../sam'
+import { SupervisorInterface } from './'
 
 setupCustomMatchers(expect)
 
@@ -12,14 +12,10 @@ describe('SupervisorInterface conformance', () => {
     concreteImplementationName | newInstance
     ${'Supervisor'}               | ${newSupervisor}
   `('$concreteImplementationName', ({ newInstance }) => {
-      const presenter = new Presenter()
-
       const supervisor = newInstance()
       expect(supervisor).toImplement(SupervisorInterface)
 
-      expect(() => supervisor.setPresenter(presenter)).not.toThrow()
-      const receivedPresenter = supervisor.getPresenter()
-      expect(receivedPresenter).toBe(presenter)
-      expect(receivedPresenter).toImplement(PresenterInterface)
+      expect(() => supervisor.setPresenter(null)).not.toThrow()
+      expect(supervisor.getPresenter()).toBe(null)
     })
 })

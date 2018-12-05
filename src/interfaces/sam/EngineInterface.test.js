@@ -1,12 +1,11 @@
 /* global describe, test, expect */
 import { setupCustomMatchers } from '../../helpers/jest'
-import { Engine, Presenter, Supervisor, Model, Actions } from '../../sam'
-import { PresenterInterface, SupervisorInterface, ModelInterface, ActionsInterface } from './'
-import { EngineInterface } from './EngineInterface';
+import { Engine } from '../../sam'
+import { EngineInterface } from './';
 
 setupCustomMatchers(expect)
 
-const newEngine = () => new Engine(new Presenter(), new Supervisor(), new Model(), new Actions())
+const newEngine = () => new Engine()
 
 describe('EngineInterface conformance', () => {
   test.each`
@@ -16,22 +15,16 @@ describe('EngineInterface conformance', () => {
     const engine = newInstance()
     expect(engine).toImplement(EngineInterface)
 
-    const presenter = engine.getPresenter()
-    expect(presenter).toImplement(PresenterInterface)
-    expect(() => engine.setPresenter(presenter)).not.toThrow()
+    expect(() => engine.setPresenter(null)).not.toThrow()
+    expect(engine.getPresenter()).toBe(null)
 
-    const supervisor = engine.getSupervisor()
-    expect(supervisor).toImplement(SupervisorInterface)
-    expect(() => engine.setSupervisor(supervisor)).not.toThrow()
+    expect(() => engine.setSupervisor(null)).not.toThrow()
+    expect(engine.getSupervisor()).toBe(null)
 
-    const model = engine.getModel()
-    expect(model).toImplement(ModelInterface)
-    expect(() => engine.setModel(model)).not.toThrow()
+    expect(() => engine.setModel(null)).not.toThrow()
+    expect(engine.getModel()).toBe(null)
 
-    const actions = engine.getActions()
-    expect(actions).toImplement(ActionsInterface)
-    expect(() => engine.setActions(actions)).not.toThrow()
-
-    expect(() => engine.start()).not.toThrow()
+    expect(() => engine.setActions(null)).not.toThrow()
+    expect(engine.getActions()).toBe(null)
   })
 })
