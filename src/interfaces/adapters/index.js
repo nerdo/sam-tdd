@@ -1,1 +1,1 @@
-export * from './GetSetInterface'
+export * from './MutatorInterface'

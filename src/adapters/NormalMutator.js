@@ -1,5 +1,5 @@
 
-export class MutableGetSet {
+export class NormalMutator {
   get (obj, path, defaultValue = void 0) {
     let result = obj
     const arrayPath = path ? [].concat(path) : []

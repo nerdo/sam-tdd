@@ -1,11 +1,11 @@
 /* global describe, test, expect */
 import { setupCustomMatchers } from '../helpers/jest'
-import { GetSetInterface } from '../interfaces/adapters'
-import { ImmutableGetSet } from './ImmutableGetSet'
+import { MutatorInterface } from '../interfaces/adapters'
+import { ImmutableMutator } from './ImmutableMutator'
 
 setupCustomMatchers(expect)
 
-describe('ImmutableGetSet', () => {
+describe('ImmutableMutator', () => {
   describe('get', () => {
     test('an immutable copy of the entire object', () => {
       const obj = {
@@ -18,7 +18,7 @@ describe('ImmutableGetSet', () => {
         }
       }
 
-      const gs = new ImmutableGetSet()
+      const gs = new ImmutableMutator()
 
       const result = gs.get(obj)
       try { result.bar = 5 } catch { }
@@ -46,7 +46,7 @@ describe('ImmutableGetSet', () => {
         }
       }
 
-      const gs = new ImmutableGetSet()
+      const gs = new ImmutableMutator()
       let result = gs.get(obj, ['foo'])
       try { result.bar = 5 } catch { }
 
@@ -72,7 +72,7 @@ describe('ImmutableGetSet', () => {
         }
       }
 
-      const gs = new ImmutableGetSet()
+      const gs = new ImmutableMutator()
 
       const result = gs.set(obj, ['foo', 3, 'hello'], 'set')
 

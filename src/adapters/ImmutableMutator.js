@@ -1,4 +1,6 @@
-export class GetSetInterface {
+import Immutable from 'seamless-immutable'
+
+export class ImmutableMutator {
   /**
    * Gets a value from an object.
    * @param {Object} obj - The object to get the value from.
@@ -6,7 +8,11 @@ export class GetSetInterface {
    * @param {*} [defaultValue=undefined] - The value to return if it is not defined.
    * @returns {*} the value on the path, or the default value if it was not defined.
    */
-  get (obj, path, defaultValue = void 0) { throw new Error('Not Yet Implemented') }
+  get (obj, path, defaultValue = void 0) {
+    return path && path.length
+      ? Immutable.from(Immutable.getIn(obj, path, defaultValue))
+      : Immutable.from(obj)
+  }
 
   /**
    * Sets a value on an object.
@@ -15,5 +21,9 @@ export class GetSetInterface {
    * @param {*} value - The value to set on the object.
    * @returns {Object} an object with the value set.
    */
-  set (obj, path, value) { throw new Error('Not Yet Implemented') }
+  set (obj, path, value) {
+    return path instanceof Array && path.length
+      ? Immutable.setIn(obj, path, value)
+      : value
+  }
 }

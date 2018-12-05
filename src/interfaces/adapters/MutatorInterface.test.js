@@ -1,22 +1,22 @@
 /* global describe, test, expect */
 import { setupCustomMatchers } from '../../helpers/jest'
-import { GetSetInterface } from '.'
-import { ImmutableGetSet } from '../../adapters/ImmutableGetSet'
-import { MutableGetSet } from '../../adapters/MutableGetSet'
+import { MutatorInterface } from '.'
+import { ImmutableMutator } from '../../adapters/ImmutableMutator'
+import { NormalMutator } from '../../adapters/NormalMutator'
 
 setupCustomMatchers(expect)
 
-describe('GetSetInterface conformance', () => {
+describe('MutatorInterface conformance', () => {
   describe.each`
     concreteImplementationName | newInstance
-    ${'MutableGetSet'}         | ${() => new MutableGetSet()}
-    ${'ImmutableGetSet'}       | ${() => new ImmutableGetSet()}
+    ${'NormalMutator'}         | ${() => new NormalMutator()}
+    ${'ImmutableMutator'}       | ${() => new ImmutableMutator()}
   `('$concreteImplementationName', ({newInstance}) => {
-    test('implementing GetSetInterface', () => {
+    test('implementing MutatorInterface', () => {
       const result = newInstance()
 
       expect(result).toBeDefined()
-      expect(result).toImplement(GetSetInterface)
+      expect(result).toImplement(MutatorInterface)
     })
 
     describe('get', () => {
