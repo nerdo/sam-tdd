@@ -9,8 +9,8 @@ function newModel (data = {}) {
     set (basePath, relativePath, value) {
       this.data = mutator.set(this.data, (basePath || []).concat(relativePath || []), value)
     },
-    get (basePath, relativePath) {
-      return mutator.get(this.data, (basePath || []).concat(relativePath || []))
+    get (basePath, relativePath, defaultValue) {
+      return mutator.get(this.data, (basePath || []).concat(relativePath || []), defaultValue)
     }
   }
   return model
@@ -53,6 +53,16 @@ describe('TemperatureOp', () => {
         op.setUnits(model, { units: 'F' })
 
         expect(model.data).toMatchObject({ units: 'F' })
+      })
+
+      test('a valid unit with a value converts the value', () => {
+        const model = newModel({ units: 'C', value: 0 })
+        const op = new TemperatureOp()
+
+        op.setUnits(model, { units: 'F' })
+
+        expect(model.data).toMatchObject({ units: 'F' })
+        expect(model.data.value).toBeCloseTo(32)
       })
     })
   })

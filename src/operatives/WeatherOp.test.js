@@ -9,8 +9,8 @@ function newModel (data = {}) {
     set (basePath, relativePath, value) {
       this.data = mutator.set(this.data, (basePath || []).concat(relativePath || []), value)
     },
-    get (basePath, relativePath) {
-      return mutator.get(this.data, (basePath || []).concat(relativePath || []))
+    get (basePath, relativePath, defaultValue) {
+      return mutator.get(this.data, (basePath || []).concat(relativePath || []), defaultValue)
     }
   }
   return model

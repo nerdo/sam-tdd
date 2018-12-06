@@ -1,3 +1,5 @@
+import { convertTemperature } from '../helpers/convertTemperature'
+
 export class TemperatureOp {
   constructor (path) {
     this.setPath(path)
@@ -13,14 +15,23 @@ export class TemperatureOp {
   }
 
   setValue (model, { value } = {}) {
-    const proposal = setValue.getProposal(this, model, { value })
-    setValue.digest(this, model, proposal)
+    action(this, model, setValue, { value })
   }
 
   setUnits (model, { units } = {}) {
-    const proposal = setUnits.getProposal(this, model, { units })
-    setUnits.digest(this, model, proposal)
+    action(this, model, setUnits, { units })
   }
+}
+
+// TODO refactor action and defaults into a separate module, import them, and bind calls to them to
+// remove the need to supply the component and model as arguments.
+function action (component, model, processor, args) {
+  const proposal = processor.getProposal(component, model, args)
+  processor.digest(component, model, proposal)
+}
+
+function defaults (component, model, processor) {
+  return processor.getProposal(component, model)
 }
 
 export const setValue = {
@@ -41,6 +52,13 @@ export const setUnits = {
   },
   digest (component, model, incoming) {
     if (typeof incoming.units === 'undefined') { return }
-    model.set(component.getPath(), ['units'], incoming.units)
+    const basePath = component.getPath()
+    const value = model.get(basePath, ['value'])
+
+    if (typeof value !== 'undefined') {
+      const fromUnits = model.get(basePath, ['units'], defaults(component, model, setUnits).units)
+      model.set(basePath, ['value'], convertTemperature(value, fromUnits, incoming.units))
+    }
+    model.set(basePath, ['units'], incoming.units)
   }
 }
