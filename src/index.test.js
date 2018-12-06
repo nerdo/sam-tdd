@@ -3,56 +3,76 @@
 import { Presenter, Supervisor, Model, Engine } from './index'
 import { NormalMutator as Mutator } from './adapters'
 // import { ImmutableMutator as Mutator } from './adapters'
+import { TemperatureOp } from './operatives/TemperatureOp'
 
-const newEngine = function () {
+const newEngine = function (opTree, data) {
   const mutator = new Mutator()
   const presenter = new Presenter()
   const supervisor = new Supervisor()
   const model = new Model()
+
   model.setMutator(mutator)
+  model.set([], data)
+  model.setOpTree(opTree)
+
   return new Engine(presenter, supervisor, model)
 }
 
 describe('temperature', () => {
   test('setting the value', () => {
-    const engine = newEngine()
+    const air = new TemperatureOp()
+    const engine = newEngine({ air })
 
+    engine.reset()
     engine.start()
     expect(engine.getPresenter().state).toMatchObject({
-      value: 22,
-      units: 'C'
+      air: {
+        value: 0,
+        units: 'C'
+      }
     })
 
-    engine.getActions().setTemperature(25)
+    air.setValue({ value: 25 })
     expect(engine.getPresenter().state).toMatchObject({
-      value: 25,
-      units: 'C'
+      air: {
+        value: 25,
+        units: 'C'
+      }
     })
   })
 
   test('changing the units', () => {
-    const engine = newEngine()
+    const air = new TemperatureOp()
+    const initialData = {
+      air: {
+        value: 22,
+        units: 'C'
+      }
+    }
+    const engine = newEngine({ air }, initialData)
 
     engine.start()
     expect(engine.getPresenter().state).toMatchObject({
-      value: 22,
-      units: 'C'
+      air: {
+        value: 22,
+        units: 'C'
+      }
     })
 
-    engine.getActions().setTemperatureUnits('F')
-    expect(engine.getPresenter().state.units).toBe('F')
-    expect(engine.getPresenter().state.value).toBeCloseTo(71.6)
+    air.setUnits({ units: 'F' })
+    expect(engine.getPresenter().state.air.units).toBe('F')
+    expect(engine.getPresenter().state.air.value).toBeCloseTo(71.6)
 
-    engine.getActions().setTemperatureUnits('K')
-    expect(engine.getPresenter().state.units).toBe('K')
-    expect(engine.getPresenter().state.value).toBeCloseTo(295.15)
+    air.setUnits({ units: 'K' })
+    expect(engine.getPresenter().state.air.units).toBe('K')
+    expect(engine.getPresenter().state.air.value).toBeCloseTo(295.15)
 
-    engine.getActions().setTemperatureUnits('C')
-    expect(engine.getPresenter().state.units).toBe('C')
-    expect(engine.getPresenter().state.value).toBeCloseTo(22)
+    air.setUnits({ units: 'C' })
+    expect(engine.getPresenter().state.air.units).toBe('C')
+    expect(engine.getPresenter().state.air.value).toBeCloseTo(22)
 
-    engine.getActions().setTemperatureUnits('?')
-    expect(engine.getPresenter().state.units).toBe('C')
-    expect(engine.getPresenter().state.value).toBeCloseTo(22)
+    air.setUnits({ units: '?' })
+    expect(engine.getPresenter().state.air.units).toBe('C')
+    expect(engine.getPresenter().state.air.value).toBeCloseTo(22)
   })
 })

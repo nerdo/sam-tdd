@@ -36,6 +36,11 @@ export class EngineInterface {
   getModel () { throw new Error('Not Yet Implemented') }
 
   /**
+   * Resets the engine.
+   */
+  reset () { throw new Error('Not Yet Implemented') }
+
+  /**
    * Starts the engine.
    */
   start () { throw new Error('Not Yet Implemented') }

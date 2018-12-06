@@ -5,6 +5,13 @@ export class Supervisor {
 
   getPresenter () { return this.presenter }
 
+  setNextActionDelegates (before, after) {
+    this.nextActionDelegateBefore = before
+    this.nextActionDelegateAfter = after
+  }
+
+  getNextActionDelegates () { return [this.nextActionDelegateBefore, this.nextActionDelegateAfter] }
+
   setActions (actions) { this.actions = actions }
 
   getActions () { return this.actions }
@@ -15,16 +22,22 @@ export class Supervisor {
   }
 
   digest (model) {
-    let representation = this.presenter.temperature(model)
-
+    const representation = this.presenter.getRepresentation(model)
     this.presenter.render(representation)
   }
 
   nextAction (model) {
-    if (typeof model.get(['changed', 'units']) !== 'undefined') {
-      this.getActions().setTemperature(
-        convertTemperature(model.get(['value']), model.get(['changed', 'units']), model.get(['units']))
-      )
+    const [beforeOps, afterOps] = this.getNextActionDelegates()
+
+    if (beforeOps) {
+      this.beforeOps(model)
+    }
+
+    // Allow operatives to tap into next actions through the model.
+    model.nextAction()
+
+    if (afterOps) {
+      this.afterOps(model)
     }
   }
 }

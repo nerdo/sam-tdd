@@ -20,5 +20,10 @@ describe('ModelInterface conformance of', () => {
 
       expect(() => model.setMutator(null)).not.toThrow()
       expect(model.getMutator()).toBe(null)
+
+      expect(() => model.setOpTree({})).not.toThrow()
+      expect(model.getOpTree()).toMatchObject({})
+
+      expect(() => model.reset()).not.toThrow()
     })
 })

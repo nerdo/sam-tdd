@@ -22,6 +22,10 @@ export class TemperatureOp {
   setUnits ({ units } = {}) {
     action(this, this.model, setUnits, { units })
   }
+
+  // nextAction () {
+  //   console.log('called')
+  // }
 }
 
 export const setValue = {
