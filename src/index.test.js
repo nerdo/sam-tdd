@@ -1,13 +1,14 @@
 /* global describe, test, expect */
 
-import { Presenter, Supervisor, Model, Engine } from './index'
+import { Supervisor, Model, Engine } from './index'
 import { NormalMutator as Mutator } from './adapters'
 // import { ImmutableMutator as Mutator } from './adapters'
 import { TemperatureOp } from './operatives/TemperatureOp'
+import { TestPresenter } from './TestPresenter'
 
 const newEngine = function (opTree, data) {
   const mutator = new Mutator()
-  const presenter = new Presenter()
+  const presenter = new TestPresenter()
   const supervisor = new Supervisor()
   const model = new Model()
 
