@@ -1,5 +1,6 @@
 import { TemperatureOp } from './TemperatureOp'
 import { action, defaults, mount } from '../sam/functions'
+import { FakeWeather } from '../adapters/FakeWeather'
 
 export class WeatherOp {
   mount (model, path) {
@@ -23,25 +24,23 @@ export class WeatherOp {
 
   setLocation ({ location } = {}) {
     action(this, this.model, setLocation, { location })
-    this.weatherDataPromise = this.restartWeatherCall()
+    this.weatherDataPromise = this.restartWeatherCall(location)
   }
 
-  restartWeatherCall () {
-    if (this.weatherCallTimeout) {
-      clearTimeout(this.weatherCallTimeout)
-    }
+  setWeatherService (service) {
+    this.weatherService = service
+  }
 
-    // A fake delay to simulate an asynchronous call...
-    return new Promise((resolve, reject) => {
-      this.weatherCallTimeout = setTimeout(
-        () => {
-          this.temperature.setUnits({ units: 'F' })
-          this.temperature.setValue({ value: 50 })
-          resolve()
-        },
-        200
-      )
-    })
+  restartWeatherCall (location) {
+    if (!this.weatherService) {
+      this.setWeatherService(new FakeWeather())
+    }
+    return this.weatherService
+      .getCurrentWeather(location, true)
+      .then(weather => {
+        this.temperature.setUnits({ units: weather.temperature.units })
+        this.temperature.setValue({ value: weather.temperature.value })
+      })
   }
 
   gettingWeatherData () {
