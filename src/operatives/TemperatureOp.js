@@ -1,25 +1,29 @@
 import { convertTemperature } from '../helpers/convertTemperature'
 
 export class TemperatureOp {
-  constructor (path) {
-    this.setPath(path)
+  constructor (model, path) {
+    this.mount(model, path)
   }
 
-  setPath (path) { this.path = path }
+  mount (model, path) {
+    this.model = model
+    this.path = path
+    mount(this, this.model, this.path)
+  }
 
   getPath (...relative) { return (this.path || []).concat(relative) }
 
-  reset (model) {
-    this.setValue(model)
-    this.setUnits(model)
+  reset () {
+    this.setValue(this.model)
+    this.setUnits(this.model)
   }
 
-  setValue (model, { value } = {}) {
-    action(this, model, setValue, { value })
+  setValue ({ value } = {}) {
+    action(this, this.model, setValue, { value })
   }
 
-  setUnits (model, { units } = {}) {
-    action(this, model, setUnits, { units })
+  setUnits ({ units } = {}) {
+    action(this, this.model, setUnits, { units })
   }
 }
 
@@ -32,6 +36,10 @@ function action (op, model, processor, args) {
 
 function defaults (op, model, processor) {
   return processor.getProposal(op, model)
+}
+
+function mount (op, model, path) {
+  return op
 }
 
 export const setValue = {
@@ -48,7 +56,7 @@ export const setUnits = {
   getProposal (op, model, { units = 'C' } = {}) {
     return ['C', 'F', 'K'].includes(units)
       ? { units }
-      : { units: model.get(op.getPath(), ['units']) }
+      : { units: model.get(op.getPath('units')) }
   },
   digest (op, model, incoming) {
     if (typeof incoming.units === 'undefined') { return }

@@ -20,18 +20,18 @@ describe('WeatherOp', () => {
   describe('setLocation', () => {
     test('defaults', () => {
       const model = newModel()
-      const op = new WeatherOp()
+      const op = new WeatherOp(model)
 
-      op.setLocation(model)
+      op.setLocation()
 
       expect(model.data.location).toBeUndefined()
     })
 
     test('a valid location', () => {
       const model = newModel()
-      const op = new WeatherOp()
+      const op = new WeatherOp(model)
 
-      op.setLocation(model, { location: 'Guadalajara, Jalisco, MX' })
+      op.setLocation({ location: 'Guadalajara, Jalisco, MX' })
 
       expect(model.data).toMatchObject({ location: 'Guadalajara, Jalisco, MX' })
     })
@@ -39,11 +39,11 @@ describe('WeatherOp', () => {
     describe('temperature', () => {
       test('experimenting with operative composition', () => {
         const model = newModel()
-        const op = new WeatherOp(['foo'])
+        const op = new WeatherOp(model, ['foo'])
         // const op = new WeatherOp()
 
-        op.reset(model)
-        op.setLocation(model, { location: 'Guadalajara, Jalisco, MX' })
+        op.reset()
+        op.setLocation({ location: 'Guadalajara, Jalisco, MX' })
 
         model.data//?
       })

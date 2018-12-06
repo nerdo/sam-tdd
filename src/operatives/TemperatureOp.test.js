@@ -20,7 +20,7 @@ describe('TemperatureOp', () => {
   describe('setValue', () => {
     test('defaults', () => {
       const model = newModel()
-      const op = new TemperatureOp()
+      const op = new TemperatureOp(model)
 
       op.setValue(model)
 
@@ -29,9 +29,9 @@ describe('TemperatureOp', () => {
 
     test('a valid temperature', () => {
       const model = newModel()
-      const op = new TemperatureOp()
+      const op = new TemperatureOp(model)
 
-      op.setValue(model, { value: 5 })
+      op.setValue({ value: 5 })
 
       expect(model.data).toMatchObject({ value: 5 })
     })
@@ -39,7 +39,7 @@ describe('TemperatureOp', () => {
     describe('setUnits', () => {
       test('defaults', () => {
         const model = newModel()
-        const op = new TemperatureOp()
+        const op = new TemperatureOp(model)
 
         op.setUnits(model)
 
@@ -48,18 +48,18 @@ describe('TemperatureOp', () => {
 
       test('a valid unit', () => {
         const model = newModel()
-        const op = new TemperatureOp()
+        const op = new TemperatureOp(model)
 
-        op.setUnits(model, { units: 'F' })
+        op.setUnits({ units: 'F' })
 
         expect(model.data).toMatchObject({ units: 'F' })
       })
 
       test('a valid unit with a value converts the value', () => {
         const model = newModel({ units: 'C', value: 0 })
-        const op = new TemperatureOp()
+        const op = new TemperatureOp(model)
 
-        op.setUnits(model, { units: 'F' })
+        op.setUnits({ units: 'F' })
 
         expect(model.data).toMatchObject({ units: 'F' })
         expect(model.data.value).toBeCloseTo(32)

@@ -1,25 +1,29 @@
 import { TemperatureOp } from './TemperatureOp';
 
 export class WeatherOp {
-  constructor (path) {
-    this.temperature = new TemperatureOp()
-    this.setPath(path)
+  constructor (model, path) {
+    this.mount(model, path)
   }
 
-  reset (model) {
-    this.setLocation(model)
-    this.temperature.reset(model)
-  }
-
-  setPath (path) {
+  mount (model, path) {
+    this.model = model
     this.path = path
-    this.temperature.setPath((this.path || []).concat('temperature'))
+    mount(this, this.model, this.path)
+
+    this.temperature = typeof this.temperature === 'undefined'
+      ? new TemperatureOp(this.model, this.getPath('temperature'))
+      : this.temperature.mount(this.model, this.getPath('temperature'))
+  }
+
+  reset () {
+    this.setLocation()
+    this.temperature.reset()
   }
 
   getPath (...relative) { return (this.path || []).concat(relative) }
 
-  setLocation (model, { location } = {}) {
-    action(this, model, setLocation, { location })
+  setLocation ({ location } = {}) {
+    action(this, this.model, setLocation, { location })
   }
 }
 
@@ -32,6 +36,10 @@ function action (op, model, processor, args) {
 
 function defaults (op, model, processor) {
   return processor.getProposal(op, model)
+}
+
+function mount (op, model, path) {
+  return op
 }
 
 export const setLocation = {
