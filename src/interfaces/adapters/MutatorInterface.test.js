@@ -62,7 +62,18 @@ describe('MutatorInterface conformance of', () => {
         expect(result).toMatch('world')
       })
 
-      test('a value on an object path that does not exist', () => {
+      test('a value on an object path that does not exist (shallow)', () => {
+        const obj = {
+          foo: { }
+        }
+        const gs = newInstance()
+
+        const result = gs.get(obj, ['foo', 'bar'], 'default value')
+
+        expect(result).toMatch('default value')
+      })
+
+      test('a value on an object path that does not exist (deep)', () => {
         const obj = {
           foo: { }
         }

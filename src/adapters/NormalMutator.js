@@ -16,8 +16,9 @@ export class NormalMutator {
         return defaultValue
       }
     }
-
-    return result[lastKey]
+    return typeof result[lastKey] === 'undefined'
+      ? defaultValue
+      : result[lastKey]
   }
 
   set (obj, path, value) {
