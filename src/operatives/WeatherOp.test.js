@@ -15,6 +15,11 @@ function newModel (data = {}, mutator = new NormalMutator()) {
     },
     getOpTree (path) {
       return normalMutator.get(this.opTree, path)
+    },
+    getSupervisor () {
+      return {
+        process (model) { }
+      }
     }
   }
   return model
@@ -24,7 +29,8 @@ describe('WeatherOp', () => {
   describe('setLocation', () => {
     test('defaults', () => {
       const model = newModel()
-      const op = new WeatherOp(model)
+      const op = new WeatherOp()
+      op.mount(model)
 
       op.setLocation()
 
@@ -33,7 +39,8 @@ describe('WeatherOp', () => {
 
     test('a valid location', () => {
       const model = newModel()
-      const op = new WeatherOp(model)
+      const op = new WeatherOp()
+      op.mount(model)
 
       op.setLocation({ location: 'Guadalajara, Jalisco, MX' })
 
@@ -43,14 +50,13 @@ describe('WeatherOp', () => {
     describe('temperature', () => {
       test('experimenting with operative composition', () => {
         const model = newModel()
-        const op = new WeatherOp(model, ['foo'])
-        // const op = new WeatherOp()
+        const op = new WeatherOp()
+        op.mount(model)
 
         op.reset()
         op.setLocation({ location: 'Guadalajara, Jalisco, MX' })
 
         model.data//?
-        model.opTree.foo.temperature//?
         model.getOpTree(['foo'])//?
       })
 

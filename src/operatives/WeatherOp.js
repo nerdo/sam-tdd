@@ -1,19 +1,17 @@
-import { TemperatureOp } from './TemperatureOp';
-import { NormalMutator } from '../adapters';
+import { TemperatureOp } from './TemperatureOp'
+import { action, defaults, mount } from '../sam/functions'
 
 export class WeatherOp {
-  constructor (model, path) {
-    this.mount(model, path)
-  }
-
   mount (model, path) {
     this.model = model
     this.path = path
     mount(this, this.model, this.path)
 
-    this.temperature = typeof this.temperature === 'undefined'
-      ? new TemperatureOp(this.model, this.getPath('temperature'))
-      : this.temperature.mount(this.model, this.getPath('temperature'))
+    if (typeof this.temperature === 'undefined') {
+      this.temperature = new TemperatureOp()
+    }
+
+    this.temperature.mount(this.model, this.getPath('temperature'))
   }
 
   reset () {
@@ -26,22 +24,6 @@ export class WeatherOp {
   setLocation ({ location } = {}) {
     action(this, this.model, setLocation, { location })
   }
-}
-
-// TODO refactor action and defaults into a separate module
-function action (op, model, processor, args) {
-  const proposal = processor.getProposal(op, model, args)
-  processor.digest(op, model, proposal)
-}
-
-function defaults (op, model, processor) {
-  return processor.getProposal(op, model)
-}
-
-const normalMutator = new NormalMutator()
-function mount (op, model, path) {
-  model.opTree = normalMutator.set(model.opTree, path, op)
-  return op
 }
 
 export const setLocation = {

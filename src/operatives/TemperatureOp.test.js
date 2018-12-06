@@ -15,6 +15,11 @@ function newModel (data = {}, mutator = new NormalMutator()) {
     },
     getOpTree (path) {
       return normalMutator.get(this.opTree, path)
+    },
+    getSupervisor () {
+      return {
+        process (model) { }
+      }
     }
   }
   return model
@@ -24,7 +29,8 @@ describe('TemperatureOp', () => {
   describe('setValue', () => {
     test('defaults', () => {
       const model = newModel()
-      const op = new TemperatureOp(model)
+      const op = new TemperatureOp()
+      op.mount(model)
 
       op.setValue(model)
 
@@ -33,7 +39,8 @@ describe('TemperatureOp', () => {
 
     test('a valid temperature', () => {
       const model = newModel()
-      const op = new TemperatureOp(model)
+      const op = new TemperatureOp()
+      op.mount(model)
 
       op.setValue({ value: 5 })
 
@@ -43,7 +50,8 @@ describe('TemperatureOp', () => {
     describe('setUnits', () => {
       test('defaults', () => {
         const model = newModel()
-        const op = new TemperatureOp(model)
+        const op = new TemperatureOp()
+        op.mount(model)
 
         op.setUnits(model)
 
@@ -52,7 +60,8 @@ describe('TemperatureOp', () => {
 
       test('a valid unit', () => {
         const model = newModel()
-        const op = new TemperatureOp(model)
+        const op = new TemperatureOp()
+        op.mount(model)
 
         op.setUnits({ units: 'F' })
 
@@ -61,7 +70,8 @@ describe('TemperatureOp', () => {
 
       test('a valid unit with a value converts the value', () => {
         const model = newModel({ units: 'C', value: 0 })
-        const op = new TemperatureOp(model)
+        const op = new TemperatureOp()
+        op.mount(model)
 
         op.setUnits({ units: 'F' })
 

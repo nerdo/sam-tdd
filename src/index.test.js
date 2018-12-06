@@ -1,6 +1,6 @@
 /* global describe, test, expect */
 
-import { Presenter, Supervisor, Model, Actions, Engine } from './index'
+import { Presenter, Supervisor, Model, Engine } from './index'
 import { NormalMutator as Mutator } from './adapters'
 // import { ImmutableMutator as Mutator } from './adapters'
 
@@ -9,14 +9,12 @@ const newEngine = function () {
   const presenter = new Presenter()
   const supervisor = new Supervisor()
   const model = new Model()
-  const actions = new Actions()
   model.setMutator(mutator)
-  supervisor.setActions(actions)
-  return new Engine(presenter, supervisor, model, actions)
+  return new Engine(presenter, supervisor, model)
 }
 
-describe('counter', () => {
-  test('setting the temperature', () => {
+describe('temperature', () => {
+  test('setting the value', () => {
     const engine = newEngine()
 
     engine.start()
@@ -32,7 +30,7 @@ describe('counter', () => {
     })
   })
 
-  test('changing the temperature units', () => {
+  test('changing the units', () => {
     const engine = newEngine()
 
     engine.start()

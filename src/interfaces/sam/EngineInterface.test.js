@@ -23,8 +23,5 @@ describe('EngineInterface conformance of', () => {
 
     expect(() => engine.setModel(null)).not.toThrow()
     expect(engine.getModel()).toBe(null)
-
-    expect(() => engine.setActions(null)).not.toThrow()
-    expect(engine.getActions()).toBe(null)
   })
 })
