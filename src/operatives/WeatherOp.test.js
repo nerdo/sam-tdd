@@ -3,6 +3,7 @@ import { WeatherOp } from './WeatherOp'
 import { NormalMutator, ImmutableMutator } from '../adapters'
 
 function newModel (data = {}, mutator = new NormalMutator()) {
+  const normalMutator = new NormalMutator()
   const model = {
     data,
     opTree: {},
@@ -11,6 +12,9 @@ function newModel (data = {}, mutator = new NormalMutator()) {
     },
     get (path, defaultValue) {
       return mutator.get(this.data, path, defaultValue)
+    },
+    getOpTree (path) {
+      return normalMutator.get(this.opTree, path)
     }
   }
   return model
@@ -46,6 +50,8 @@ describe('WeatherOp', () => {
         op.setLocation({ location: 'Guadalajara, Jalisco, MX' })
 
         model.data//?
+        model.opTree.foo.temperature//?
+        model.getOpTree(['foo'])//?
       })
 
       // test('a valid unit', () => {

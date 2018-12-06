@@ -2,7 +2,8 @@
 import { TemperatureOp } from './TemperatureOp'
 import { NormalMutator } from '../adapters/NormalMutator'
 
-function newModel(data = {}, mutator = new NormalMutator()) {
+function newModel (data = {}, mutator = new NormalMutator()) {
+  const normalMutator = new NormalMutator()
   const model = {
     data,
     opTree: {},
@@ -11,6 +12,9 @@ function newModel(data = {}, mutator = new NormalMutator()) {
     },
     get (path, defaultValue) {
       return mutator.get(this.data, path, defaultValue)
+    },
+    getOpTree (path) {
+      return normalMutator.get(this.opTree, path)
     }
   }
   return model

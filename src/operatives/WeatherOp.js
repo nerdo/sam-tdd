@@ -1,4 +1,5 @@
 import { TemperatureOp } from './TemperatureOp';
+import { NormalMutator } from '../adapters';
 
 export class WeatherOp {
   constructor (model, path) {
@@ -27,8 +28,7 @@ export class WeatherOp {
   }
 }
 
-// TODO refactor action and defaults into a separate module, import them, and bind calls to them to
-// remove the need to supply the op and model as arguments.
+// TODO refactor action and defaults into a separate module
 function action (op, model, processor, args) {
   const proposal = processor.getProposal(op, model, args)
   processor.digest(op, model, proposal)
@@ -38,7 +38,9 @@ function defaults (op, model, processor) {
   return processor.getProposal(op, model)
 }
 
+const normalMutator = new NormalMutator()
 function mount (op, model, path) {
+  model.opTree = normalMutator.set(model.opTree, path, op)
   return op
 }
 
