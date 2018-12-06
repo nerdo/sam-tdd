@@ -2,15 +2,15 @@
 import { WeatherOp } from './WeatherOp'
 import { NormalMutator, ImmutableMutator } from '../adapters'
 
-function newModel (data = {}) {
-  const mutator = new NormalMutator()
+function newModel (data = {}, mutator = new NormalMutator()) {
   const model = {
     data,
-    set (basePath, relativePath, value) {
-      this.data = mutator.set(this.data, (basePath || []).concat(relativePath || []), value)
+    opTree: {},
+    set (path, value) {
+      this.data = mutator.set(this.data, path, value)
     },
-    get (basePath, relativePath, defaultValue) {
-      return mutator.get(this.data, (basePath || []).concat(relativePath || []), defaultValue)
+    get (path, defaultValue) {
+      return mutator.get(this.data, path, defaultValue)
     }
   }
   return model

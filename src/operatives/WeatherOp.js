@@ -7,7 +7,7 @@ export class WeatherOp {
   }
 
   reset (model) {
-    // this.setLocation(model)
+    this.setLocation(model)
     this.temperature.reset(model)
   }
 
@@ -16,7 +16,7 @@ export class WeatherOp {
     this.temperature.setPath((this.path || []).concat('temperature'))
   }
 
-  getPath () { return this.path }
+  getPath (...relative) { return (this.path || []).concat(relative) }
 
   setLocation (model, { location } = {}) {
     action(this, model, setLocation, { location })
@@ -24,22 +24,22 @@ export class WeatherOp {
 }
 
 // TODO refactor action and defaults into a separate module, import them, and bind calls to them to
-// remove the need to supply the component and model as arguments.
-function action (component, model, processor, args) {
-  const proposal = processor.getProposal(component, model, args)
-  processor.digest(component, model, proposal)
+// remove the need to supply the op and model as arguments.
+function action (op, model, processor, args) {
+  const proposal = processor.getProposal(op, model, args)
+  processor.digest(op, model, proposal)
 }
 
-function defaults (component, model, processor) {
-  return processor.getProposal(component, model)
+function defaults (op, model, processor) {
+  return processor.getProposal(op, model)
 }
 
 export const setLocation = {
-  getProposal (component, model, { location = void 0 } = {}) {
+  getProposal (op, model, { location = void 0 } = {}) {
     return { location }
   },
-  digest (component, model, incoming) {
+  digest (op, model, incoming) {
     if (typeof incoming.location === 'undefined') { return }
-    model.set(component.getPath(), ['location'], incoming.location)
+    model.set(op.getPath('location'), incoming.location)
   }
 }

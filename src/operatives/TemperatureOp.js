@@ -7,7 +7,7 @@ export class TemperatureOp {
 
   setPath (path) { this.path = path }
 
-  getPath () { return this.path }
+  getPath (...relative) { return (this.path || []).concat(relative) }
 
   reset (model) {
     this.setValue(model)
@@ -24,41 +24,40 @@ export class TemperatureOp {
 }
 
 // TODO refactor action and defaults into a separate module, import them, and bind calls to them to
-// remove the need to supply the component and model as arguments.
-function action (component, model, processor, args) {
-  const proposal = processor.getProposal(component, model, args)
-  processor.digest(component, model, proposal)
+// remove the need to supply the op and model as arguments.
+function action (op, model, processor, args) {
+  const proposal = processor.getProposal(op, model, args)
+  processor.digest(op, model, proposal)
 }
 
-function defaults (component, model, processor) {
-  return processor.getProposal(component, model)
+function defaults (op, model, processor) {
+  return processor.getProposal(op, model)
 }
 
 export const setValue = {
-  getProposal (component, model, { value = 0 } = {}) {
+  getProposal (op, model, { value = 0 } = {}) {
     return { value }
   },
-  digest (component, model, incoming) {
+  digest (op, model, incoming) {
     if (typeof incoming.value === 'undefined') { return }
-    model.set(component.getPath(), ['value'], incoming.value)
+    model.set(op.getPath('value'), incoming.value)
   }
 }
 
 export const setUnits = {
-  getProposal (component, model, { units = 'C' } = {}) {
+  getProposal (op, model, { units = 'C' } = {}) {
     return ['C', 'F', 'K'].includes(units)
       ? { units }
-      : { units: model.get(component.getPath(), ['units']) }
+      : { units: model.get(op.getPath(), ['units']) }
   },
-  digest (component, model, incoming) {
+  digest (op, model, incoming) {
     if (typeof incoming.units === 'undefined') { return }
-    const basePath = component.getPath()
-    const value = model.get(basePath, ['value'])
+    const value = model.get(op.getPath('value'))
 
     if (typeof value !== 'undefined') {
-      const fromUnits = model.get(basePath, ['units'], defaults(component, model, setUnits).units)
-      model.set(basePath, ['value'], convertTemperature(value, fromUnits, incoming.units))
+      const fromUnits = model.get(op.getPath('units'), defaults(op, model, setUnits).units)
+      model.set(op.getPath('value'), convertTemperature(value, fromUnits, incoming.units))
     }
-    model.set(basePath, ['units'], incoming.units)
+    model.set(op.getPath('units'), incoming.units)
   }
 }
