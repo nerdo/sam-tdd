@@ -23,6 +23,29 @@ export class WeatherOp {
 
   setLocation ({ location } = {}) {
     action(this, this.model, setLocation, { location })
+    this.weatherDataPromise = this.restartWeatherCall()
+  }
+
+  restartWeatherCall () {
+    if (this.weatherCallTimeout) {
+      clearTimeout(this.weatherCallTimeout)
+    }
+
+    // A fake delay to simulate an asynchronous call...
+    return new Promise((resolve, reject) => {
+      this.weatherCallTimeout = setTimeout(
+        () => {
+          this.temperature.setUnits({ units: 'F' })
+          this.temperature.setValue({ value: 50 })
+          resolve()
+        },
+        200
+      )
+    })
+  }
+
+  gettingWeatherData () {
+    return this.weatherDataPromise
   }
 }
 

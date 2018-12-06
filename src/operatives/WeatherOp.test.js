@@ -42,12 +42,30 @@ describe('WeatherOp', () => {
       const op = new WeatherOp()
       op.mount(model)
 
-      op.setLocation({ location: 'Guadalajara, Jalisco, MX' })
+      op.setLocation({ location: 'Guadalajara' })
 
-      expect(model.data).toMatchObject({ location: 'Guadalajara, Jalisco, MX' })
+      expect(model.data).toMatchObject({ location: 'Guadalajara' })
     })
 
-    describe('temperature', () => {
+    describe('setting temperature', () => {
+      test('async call', async () => {
+        const model = newModel()
+        const op = new WeatherOp()
+        op.mount(model)
+
+        op.setLocation({ location: 'Guadalajara' })
+
+        // Wait for the side-effect (getting weather data) to complete...
+        await op.gettingWeatherData()
+
+        expect(model.data).toMatchObject({
+          temperature: {
+            units: 'F',
+            value: 50
+          }
+        })
+      })
+
       test('experimenting with operative composition', () => {
         const model = newModel()
         const op = new WeatherOp()
