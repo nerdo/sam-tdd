@@ -7,7 +7,7 @@ setupCustomMatchers(expect)
 
 const newSupervisor = () => new Supervisor()
 
-describe('SupervisorInterface conformance', () => {
+describe('SupervisorInterface conformance of', () => {
   test.each`
     concreteImplementationName | newInstance
     ${'Supervisor'}               | ${newSupervisor}

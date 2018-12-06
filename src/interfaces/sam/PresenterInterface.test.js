@@ -7,7 +7,7 @@ setupCustomMatchers(expect)
 
 const newPresenter = () => new Presenter()
 
-describe('PresenterInterface conformance', () => {
+describe('PresenterInterface conformance of', () => {
   test.each`
     concreteImplementationName | newInstance
     ${'Presenter'}               | ${newPresenter}

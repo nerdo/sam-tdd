@@ -3,7 +3,11 @@ export class Actions {
 
   getModel () { return this.model }
 
-  increment () {
-    this.model.present({ counter: this.model.data.counter + 1 })
+  setTemperature (value) {
+    this.model.present({ value })
+  }
+
+  setTemperatureUnits (units) {
+    this.model.present({ units })
   }
 }

@@ -6,7 +6,7 @@ import { NormalMutator } from '../../adapters/NormalMutator'
 
 setupCustomMatchers(expect)
 
-describe('MutatorInterface conformance', () => {
+describe('MutatorInterface conformance of', () => {
   describe.each`
     concreteImplementationName | newInstance
     ${'NormalMutator'}         | ${() => new NormalMutator()}

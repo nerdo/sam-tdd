@@ -3,7 +3,7 @@ export class Presenter {
     this.state = representation
   }
 
-  counter (model) {
-    return model.data.counter
+  temperature (model) {
+    return model.data
   }
 }

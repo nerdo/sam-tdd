@@ -12,6 +12,18 @@ export class SupervisorInterface {
   getPresenter () { throw new Error('Not Yet Implemented') }
 
   /**
+   * Sets the actions.
+   * @param {ActionsInterface} actions
+   */
+  setActions (actions) { throw new Error('Not Yet Implemented') }
+
+  /**
+   * Gets the actions.
+   * @returns {ActionsInterface}
+   */
+  getActions () { throw new Error('Not Yet Implemented') }
+
+  /**
    * Processes the model.
    * @param {ModelInterface} model
    */

@@ -7,7 +7,7 @@ setupCustomMatchers(expect)
 
 const newModel = () => new Model()
 
-describe('ModelInterface conformance', () => {
+describe('ModelInterface conformance of', () => {
   test.each`
     concreteImplementationName | newInstance
     ${'Model'}               | ${newModel}

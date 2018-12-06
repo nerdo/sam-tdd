@@ -7,7 +7,7 @@ setupCustomMatchers(expect)
 
 const newActions = () => new Actions()
 
-describe('ActionsInterface conformance', () => {
+describe('ActionsInterface conformance of', () => {
   test.each`
     concreteImplementationName | newInstance
     ${'Actions'}               | ${newActions}

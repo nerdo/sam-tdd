@@ -24,8 +24,16 @@ export class ModelInterface {
   getMutator () { throw new Error('Not Yet Implemented') }
 
   /**
-   * Presents a change to the model.
-   * @param {mixed} change
+   * Gets a value from the model data.
+   * @param {*[]} path  - The path (list of keys) to pull the value from.
+   * @param {*} [defaultValue=undefined] - The value to return if it is not defined.
+   * @returns {*} the value on the path, or the default value if it was not defined.
    */
-  present (change) { throw new Error('Not Yet Implemented') }
+  get (path, defaultValue = void 0) { throw new Error('Not Yet Implemented') }
+
+  /**
+   * Presents a change to the model.
+   * @param {mixed} incoming
+   */
+  present (incoming) { throw new Error('Not Yet Implemented') }
 }

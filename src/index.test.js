@@ -4,31 +4,57 @@ import { Presenter, Supervisor, Model, Actions, Engine } from './index'
 import { NormalMutator as Mutator } from './adapters'
 // import { ImmutableMutator as Mutator } from './adapters'
 
+const newEngine = function () {
+  const mutator = new Mutator()
+  const presenter = new Presenter()
+  const supervisor = new Supervisor()
+  const model = new Model()
+  const actions = new Actions()
+  model.setMutator(mutator)
+  supervisor.setActions(actions)
+  return new Engine(presenter, supervisor, model, actions)
+}
+
 describe('counter', () => {
-  test('incrementing', () => {
-    const presenter = new Presenter()
-    const supervisor = new Supervisor()
-    const model = new Model(new Mutator())
-    const actions = new Actions()
-
-    supervisor.setPresenter(presenter)
-    model.setSupervisor(supervisor)
-    actions.setModel(model)
-
-    supervisor.process(model)
-    expect(presenter.state).toBe(0)
-
-    actions.increment()
-    expect(presenter.state).toBe(1)
-  })
-
-  test('incrementing, using the engine', () => {
-    const engine = new Engine(new Presenter(), new Supervisor(), new Model(new Mutator()), new Actions())
+  test('setting the temperature', () => {
+    const engine = newEngine()
 
     engine.start()
-    expect(engine.getPresenter().state).toBe(0)
+    expect(engine.getPresenter().state).toMatchObject({
+      value: 22,
+      units: 'C'
+    })
 
-    engine.actions.increment()
-    expect(engine.getPresenter().state).toBe(1)
+    engine.getActions().setTemperature(25)
+    expect(engine.getPresenter().state).toMatchObject({
+      value: 25,
+      units: 'C'
+    })
+  })
+
+  test('changing the temperature units', () => {
+    const engine = newEngine()
+
+    engine.start()
+    expect(engine.getPresenter().state).toMatchObject({
+      value: 22,
+      units: 'C'
+    })
+
+    engine.getActions().setTemperatureUnits('F')
+    expect(engine.getPresenter().state.units).toBe('F')
+    expect(engine.getPresenter().state.value).toBeCloseTo(71.6)
+
+    engine.getActions().setTemperatureUnits('K')
+    expect(engine.getPresenter().state.units).toBe('K')
+    expect(engine.getPresenter().state.value).toBeCloseTo(295.15)
+
+    engine.getActions().setTemperatureUnits('C')
+    expect(engine.getPresenter().state.units).toBe('C')
+    expect(engine.getPresenter().state.value).toBeCloseTo(22)
+
+    engine.getActions().setTemperatureUnits('?')
+    expect(engine.getPresenter().state.units).toBe('C')
+    expect(engine.getPresenter().state.value).toBeCloseTo(22)
   })
 })

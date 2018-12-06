@@ -7,7 +7,7 @@ setupCustomMatchers(expect)
 
 const newEngine = () => new Engine()
 
-describe('EngineInterface conformance', () => {
+describe('EngineInterface conformance of', () => {
   test.each`
     concreteImplementationName | newInstance
     ${'Engine'}                | ${newEngine}

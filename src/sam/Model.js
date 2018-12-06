@@ -1,9 +1,12 @@
+import { convertTemperature } from '../helpers/convertTemperature'
+
 export class Model {
   constructor (mutator) {
     this.setMutator(mutator)
 
     this.data = {
-      counter: 0
+      value: 22,
+      units: 'C'
     }
   }
 
@@ -15,9 +18,22 @@ export class Model {
 
   getMutator () { return this.mutator }
 
-  present (change) {
-    if (typeof change.counter !== 'undefined') {
-      this.data = this.mutator.set(this.data, ['counter'], change.counter)
+  get (path, defaultValue = void 0) { return this.mutator.get(this.data, path, defaultValue) }
+
+  present (incoming) {
+    if (typeof incoming.value !== 'undefined') {
+      // this.data = this.mutator.set(this.data, ['changed', 'units'])
+      this.data = this.mutator.set(this.data, ['value'], incoming.value)
+    }
+
+    if (typeof incoming.units !== 'undefined' && ['C', 'F', 'K'].includes(incoming.units)) {
+      this.data = this.mutator.set(
+        this.data,
+        ['value'],
+        convertTemperature(this.data.value, this.data.units, incoming.units)
+      )
+      // this.data = this.mutator.set(this.data, ['changed', 'units'], this.get(['units']))
+      this.data = this.mutator.set(this.data, ['units'], incoming.units)
     }
 
     this.supervisor.process(this)
