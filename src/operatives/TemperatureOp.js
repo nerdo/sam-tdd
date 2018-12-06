@@ -23,6 +23,15 @@ export class TemperatureOp {
     action(this, this.model, setUnits, { units })
   }
 
+  getValue () {
+    console.log(this)
+    return this.model.get(this.getPath('value'))
+  }
+
+  getUnits () {
+    return this.model.get(this.getPath('units'))
+  }
+
   // nextAction () {
   //   console.log('called')
   // }
