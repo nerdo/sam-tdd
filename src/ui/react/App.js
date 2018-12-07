@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { traverse } from '../../sam/functions'
 import { TemperatureEditor } from './TemperatureEditor'
 
@@ -19,8 +19,8 @@ export function App (props) {
         key={path.join('.')}
         value={op.getValue()}
         units={op.getUnits()}
-        onValueChange={value => op.setValue({ value })}
-        onUnitsChange={units => op.setUnits({ units })}
+        onValueChange={useCallback(value => op.setValue({ value }), path)}
+        onUnitsChange={useCallback(units => op.setUnits({ units }), path)}
       />
     )
   }
