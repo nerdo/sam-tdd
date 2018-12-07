@@ -2,7 +2,9 @@ const path = require("path");
 const webpack = require("webpack");
 
 module.exports = {
-  entry: "./src/react.js",
+  entry: {
+    react: "./src/react.js"
+  },
   mode: "development",
   module: {
     rules: [
@@ -19,15 +21,7 @@ module.exports = {
   },
   resolve: { extensions: ["*", ".js", ".jsx"] },
   output: {
-    path: path.resolve(__dirname, "app/react/"),
-    publicPath: "/app/react/",
-    filename: "react-app.js"
-  },
-  devServer: {
-    contentBase: path.join(__dirname, "public/"),
-    port: 3000,
-    publicPath: "http://localhost:3000/app/react/",
-    hotOnly: true
+    path: path.resolve(__dirname, "app"),
+    filename: "[name]/[name]-app.js"
   }
-  // plugins: [new webpack.HotModuleReplacementPlugin()]
 };
