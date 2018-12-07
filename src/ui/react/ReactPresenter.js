@@ -18,7 +18,7 @@ export class ReactPresenter {
     traverse(
       representation.opTree,
       (path, op) => {
-        reactComponents.push(this.renderOp(op))
+        reactComponents.push(this.renderOp(op, path))
       }
     )
 
@@ -33,10 +33,10 @@ export class ReactPresenter {
   // temperature (model) {
   //   return model.data
   // }
-  renderOp (op) {
+  renderOp (op, path) {
     return (
       <TemperatureEditor
-        key="1"
+        key={path.join('.')}
         value={op.getValue()}
         units={op.getUnits()}
         onValueChange={value => op.setValue({ value })}

@@ -17,7 +17,8 @@ const newEngine = function (opTree, data) {
 }
 
 const air = new TemperatureOp()
-const engine = newEngine({ air })
+const water = new TemperatureOp()
+const engine = newEngine({ air, water })
 
 engine.reset()
 engine.start()
