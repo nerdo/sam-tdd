@@ -1,3 +1,4 @@
+import es6ClassBindAll from 'es6-class-bind-all'
 import { convertTemperature } from '../helpers/convertTemperature'
 import { action, defaults, mount } from '../sam/functions'
 
@@ -6,6 +7,7 @@ export class TemperatureOp {
     this.model = model
     this.path = path
     mount(this, this.model, this.path)
+    es6ClassBindAll(this)
   }
 
   getPath (...relative) { return (this.path || []).concat(relative) }
