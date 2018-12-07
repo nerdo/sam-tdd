@@ -1,11 +1,11 @@
 import { Supervisor, Model, Engine } from './index'
 import { NormalMutator as Mutator } from './adapters'
 import { TemperatureOp } from './operatives/TemperatureOp'
-import { OpTreePresenter } from './ui/react'
+import { OpTreePresenter, ViewModelPresenter } from './ui/react'
 
 const newEngine = function (opTree, data) {
   const mutator = new Mutator()
-  const presenter = new OpTreePresenter()
+  const presenter = new ViewModelPresenter()
   const supervisor = new Supervisor()
   const model = new Model()
 
