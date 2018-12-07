@@ -1,3 +1,4 @@
+import es6ClassBindAll from 'es6-class-bind-all'
 import { TemperatureOp } from './TemperatureOp'
 import { action, defaults, mount } from '../sam/functions'
 import { FakeWeather } from '../adapters/FakeWeather'
@@ -13,6 +14,7 @@ export class WeatherOp {
     }
 
     this.temperature.mount(this.model, this.getPath('temperature'))
+    es6ClassBindAll(this)
   }
 
   reset () {

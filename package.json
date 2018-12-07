@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "es6-class-bind-all": "^1.0.0",
     "lodash": "^4.17.11",
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.7.0-alpha.2",
