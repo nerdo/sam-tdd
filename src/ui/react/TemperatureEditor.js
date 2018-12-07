@@ -1,7 +1,7 @@
 import React from 'react'
 import { Something } from './Something';
 
-export function TemperatureEditor (props) {
+export const TemperatureEditor = React.memo((props) => {
   const { value = '', units = '' } = props
 
   function valueChange (e) {
@@ -23,4 +23,4 @@ export function TemperatureEditor (props) {
       Units: <input type="text" value={units} onChange={unitsChange} />
     </div>
   )
-}
+})

@@ -1,7 +1,7 @@
 import React from 'react'
 
-export function Nested () {
+export const Nested = React.memo(() => {
   return (
     <span> NESTED </span>
   )
-}
+})
