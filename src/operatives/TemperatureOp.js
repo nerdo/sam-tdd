@@ -24,7 +24,6 @@ export class TemperatureOp {
   }
 
   getValue () {
-    console.log(this)
     return this.model.get(this.getPath('value'))
   }
 
