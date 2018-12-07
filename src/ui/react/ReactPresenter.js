@@ -1,8 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { App } from './App'
-import { traverse } from '../../sam/functions';
-import { TemperatureEditor } from './TemperatureEditor';
 
 export class ReactPresenter {
   getRepresentation (model) {
@@ -13,35 +11,6 @@ export class ReactPresenter {
   }
 
   render (representation) {
-    // this.state = representation
-    let reactComponents = []
-    traverse(
-      representation.opTree,
-      (path, op) => {
-        reactComponents.push(this.renderOp(op, path))
-      }
-    )
-
-    let output = (
-      <React.Fragment>
-        {reactComponents}
-      </React.Fragment>
-    )
-    ReactDOM.render(output, document.getElementById('app'))
-  }
-
-  // temperature (model) {
-  //   return model.data
-  // }
-  renderOp (op, path) {
-    return (
-      <TemperatureEditor
-        key={path.join('.')}
-        value={op.getValue()}
-        units={op.getUnits()}
-        onValueChange={value => op.setValue({ value })}
-        onUnitsChange={units => op.setUnits({ units })}
-      />
-    )
+    ReactDOM.render(<App model={representation} />, document.getElementById('app'))
   }
 }
