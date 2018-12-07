@@ -9,23 +9,24 @@ export class ViewModelPresenter {
   }
 
   getRepresentation (model) {
-    // TODO need an interface to do this well...
-    const m = model
+    // If something changes in the model structure, this should be the *only* place that needs modification
+    // if we map what we need into our own view model...
+    const opTree = model.getOpTree()
     const updatedViewModel = {
       air: {
-        value: m.opTree.air.getValue(),
-        units: m.opTree.air.getUnits(),
+        value: opTree.air.getValue(),
+        units: opTree.air.getUnits(),
         intentions: {
-          setValue: m.opTree.air.setValue,
-          setUnits: m.opTree.air.setUnits
+          setValue: opTree.air.setValue,
+          setUnits: opTree.air.setUnits
         }
       },
       water: {
-        value: m.opTree.water.getValue(),
-        units: m.opTree.water.getUnits(),
+        value: opTree.water.getValue(),
+        units: opTree.water.getUnits(),
         intentions: {
-          setValue: m.opTree.water.setValue,
-          setUnits: m.opTree.water.setUnits
+          setValue: opTree.water.setValue,
+          setUnits: opTree.water.setUnits
         }
       }
     }

@@ -4,8 +4,8 @@ import { OpTreeRenderer } from './components'
 
 export class OpTreePresenter {
   getRepresentation (model) {
-    // TODO need an interface to do this well...
-    return model.opTree
+    // This is not recommended, because, at the very least, the top-level component depends on the model structure.
+    return model.getOpTree()
   }
 
   render (opTree) {

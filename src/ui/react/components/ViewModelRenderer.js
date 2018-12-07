@@ -6,6 +6,7 @@ export const ViewModelRenderer = React.memo((props) => {
 
   return (
     <React.Fragment>
+      <h2>react ViewModelRenderer</h2>
       <TemperatureEditor
         key="air"
         value={vm.air.value}
