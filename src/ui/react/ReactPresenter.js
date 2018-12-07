@@ -1,16 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { App } from './components'
+import { OpTreeRenderer } from './components'
 
 export class ReactPresenter {
   getRepresentation (model) {
     // TODO need an interface to do this well...
-    return model
-    // console.log(model.opTree.air)
-    // return this.temperature(model)
+    return model.opTree
   }
 
-  render (representation) {
-    ReactDOM.render(<App model={representation} />, document.getElementById('app'))
+  render (opTree) {
+    ReactDOM.render(<OpTreeRenderer opTree={opTree} />, document.getElementById('app'))
   }
 }

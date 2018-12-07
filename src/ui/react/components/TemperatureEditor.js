@@ -20,7 +20,18 @@ export const TemperatureEditor = React.memo((props) => {
     <div>
       Temperature: <input type="text" value={value} onChange={valueChange} />
       <Something />
-      Units: <input type="text" value={units} onChange={unitsChange} />
+      Units (input): <input type="text" value={units} onChange={unitsChange} />
+      Units (selection):
+      <select value={units} onChange={unitsChange}>
+        <optgroup label="Valid Units">
+          <option value="C">Celcius</option>
+          <option value="F">Farenheit</option>
+          <option value="K">Kelvin</option>
+        </optgroup>
+        <optgroup label="Fake Units">
+          <option value="I">Imaginary</option>
+        </optgroup>
+      </select>
     </div>
   )
 })

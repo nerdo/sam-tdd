@@ -2,15 +2,13 @@ import React, { useCallback } from 'react'
 import { traverse } from '../../../sam/functions'
 import { TemperatureEditor } from './TemperatureEditor'
 
-export function App (props) {
-  const { model } = props
+export function OpTreeRenderer (props) {
+  const { opTree } = props
 
   let reactComponents = []
   traverse(
-    model.opTree,
-    (path, op) => {
-      reactComponents.push(renderOp(op, path))
-    }
+    opTree,
+    (path, op) => { reactComponents.push(renderOp(op, path)) }
   )
 
   function renderOp (op, path) {
