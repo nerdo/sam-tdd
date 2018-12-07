@@ -1,3 +1,4 @@
+import Immutable from 'seamless-immutable'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { ViewModelRenderer } from './components'
@@ -28,7 +29,11 @@ export class ViewModelPresenter {
         }
       }
     }
-    return updatedViewModel
+
+    const newViewModel = Immutable.merge(this.viewModel, updatedViewModel, { deep: true })
+    console.log('newViewModel === this.viewModel', newViewModel === this.viewModel)
+    this.viewModel = newViewModel
+    return this.viewModel
   }
 
 

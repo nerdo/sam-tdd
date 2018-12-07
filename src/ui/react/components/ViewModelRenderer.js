@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { TemperatureEditor } from './TemperatureEditor'
 
-export function ViewModelRenderer (props) {
+export const ViewModelRenderer = React.memo((props) => {
   const { vm } = props
 
   return (
@@ -22,4 +22,4 @@ export function ViewModelRenderer (props) {
       />
     </React.Fragment>
   )
-}
+})
