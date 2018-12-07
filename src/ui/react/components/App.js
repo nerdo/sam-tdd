@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { traverse } from '../../sam/functions'
+import { traverse } from '../../../sam/functions'
 import { TemperatureEditor } from './TemperatureEditor'
 
 export function App (props) {

@@ -28,6 +28,6 @@ module.exports = {
     port: 3000,
     publicPath: "http://localhost:3000/app/react/",
     hotOnly: true
-  },
-  plugins: [new webpack.HotModuleReplacementPlugin()]
+  }
+  // plugins: [new webpack.HotModuleReplacementPlugin()]
 };
