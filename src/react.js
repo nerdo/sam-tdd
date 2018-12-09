@@ -1,19 +1,18 @@
-import { Supervisor, Model, Engine } from './index'
-import { NormalMutator as Mutator } from './adapters'
+import { Engine } from 'alma'
+// import { NormalMutator as Mutator } from './adapters'
 import { TemperatureOp } from './operatives/TemperatureOp'
 import { OpTreePresenter, ViewModelPresenter } from './ui/react'
 
 const newEngine = function (opTree, data) {
-  const mutator = new Mutator()
-  const presenter = new ViewModelPresenter()
-  const supervisor = new Supervisor()
-  const model = new Model()
+  const engine = new Engine(new ViewModelPresenter())
+  const model = engine.getModel()
 
-  model.setMutator(mutator)
-  model.set([], data)
-  model.setOpTree(opTree)
+  model
+    // .setMutator(mutator)
+    .set([], data)
+    .setOpTree(opTree)
 
-  return new Engine(presenter, supervisor, model)
+  return engine
 }
 
 const air = new TemperatureOp()
