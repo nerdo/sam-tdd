@@ -1,6 +1,6 @@
 import { Supervisor, Model, Engine } from './index'
 import { NormalMutator as Mutator } from './adapters'
-import { TemperatureOp } from './operatives/TemperatureOp'
+import { TemperatureOp } from './operators/TemperatureOp'
 import { ViewModelPresenter } from './ui/lit-html'
 
 const newEngine = function (opTree, data) {

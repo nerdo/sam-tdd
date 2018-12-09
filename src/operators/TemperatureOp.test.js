@@ -1,7 +1,7 @@
 /* global describe, test, expect */
 import { TemperatureOp } from './TemperatureOp'
-import { NormalMutator } from '../adapters/NormalMutator'
-import { operativeConformanceTests } from 'alma/dist/conformance-tests'
+import { NormalMutator } from 'alma'
+import { operatorConformanceTests } from 'alma/dist/conformance-tests'
 
 function newModel (data = {}, mutator = new NormalMutator()) {
   const normalMutator = new NormalMutator()
@@ -27,7 +27,7 @@ function newModel (data = {}, mutator = new NormalMutator()) {
 }
 
 describe('TemperatureOp', () => {
-  operativeConformanceTests(
+  operatorConformanceTests(
     {
       TemperatureOp: () => new TemperatureOp()
     },

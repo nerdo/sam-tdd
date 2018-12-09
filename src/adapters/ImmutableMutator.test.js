@@ -1,11 +1,9 @@
 /* global describe, test, expect */
-import { setupCustomMatchers } from '../helpers/jest'
-import { MutatorInterface } from '../interfaces/adapters'
 import { ImmutableMutator } from './ImmutableMutator'
 
-setupCustomMatchers(expect)
-
 describe('ImmutableMutator', () => {
+  // TODO use conformance test from alma here
+
   describe('get', () => {
     test('an immutable copy of the entire object', () => {
       const obj = {

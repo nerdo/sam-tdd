@@ -1,6 +1,7 @@
 /* global describe, test, expect */
 import { WeatherOp } from './WeatherOp'
-import { NormalMutator, ImmutableMutator } from '../adapters'
+import { NormalMutator } from 'alma'
+// import { ImmutableMutator } from '../adapters'
 
 function newModel (data = {}, mutator = new NormalMutator()) {
   const normalMutator = new NormalMutator()
@@ -66,7 +67,7 @@ describe('WeatherOp', () => {
         })
       })
 
-      test('experimenting with operative composition', () => {
+      test('experimenting with operator composition', () => {
         const model = newModel()
         const op = new WeatherOp()
         op.mount(model)

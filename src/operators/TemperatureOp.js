@@ -1,5 +1,5 @@
 import { convertTemperature } from '../helpers/convertTemperature'
-import { action, defaults, mount } from '../sam/functions'
+import { action, defaults, mount } from 'alma'
 
 export class TemperatureOp {
   mount (model, path) {

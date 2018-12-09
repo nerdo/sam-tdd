@@ -1,5 +1,5 @@
 import { TemperatureOp } from './TemperatureOp'
-import { action, defaults, mount } from '../sam/functions'
+import { action, defaults, mount } from 'alma'
 import { FakeWeather } from '../adapters/FakeWeather'
 
 export class WeatherOp {
