@@ -1,8 +1,8 @@
-import { TemperatureOp } from './TemperatureOp'
+import { Temperature } from './Temperature'
 import { action, defaults, mount, Operator } from 'alma'
 import { FakeWeather } from '../adapters/FakeWeather'
 
-export class WeatherOp extends Operator {
+export class Weather extends Operator {
   constructor () {
     super()
     this.setLocation = this.setLocation.bind(this);
@@ -14,7 +14,7 @@ export class WeatherOp extends Operator {
     super.mount(model, path, parentOp)
 
     if (typeof this.temperature === 'undefined') {
-      this.temperature = new TemperatureOp()
+      this.temperature = new Temperature()
       this.addNestedOp(this.temperature)
     }
 

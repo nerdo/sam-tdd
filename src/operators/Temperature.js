@@ -1,7 +1,7 @@
 import { convertTemperature } from '../helpers/convertTemperature'
 import { action, defaults, mount, Operator } from 'alma'
 
-export class TemperatureOp extends Operator {
+export class Temperature extends Operator {
   constructor () {
     super()
     this.setValue = this.setValue.bind(this);

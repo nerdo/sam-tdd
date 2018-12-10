@@ -1,5 +1,5 @@
 /* global describe, test, expect */
-import { WeatherOp } from './WeatherOp'
+import { Weather } from './Weather'
 import { NormalMutator } from 'alma'
 import { operatorConformanceTests } from 'alma/dist/conformance-tests';
 // import { ImmutableMutator } from '../adapters'
@@ -27,10 +27,10 @@ function newModel (data = {}, mutator = new NormalMutator()) {
   return model
 }
 
-describe('WeatherOp', () => {
+describe('Weather', () => {
   operatorConformanceTests(
     {
-      WeatherOp: () => new WeatherOp()
+      Weather: () => new Weather()
     },
     describe,
     test,
@@ -40,7 +40,7 @@ describe('WeatherOp', () => {
   describe('setLocation', () => {
     test('defaults', () => {
       const model = newModel()
-      const op = new WeatherOp()
+      const op = new Weather()
       op.mount(model)
 
       op.setLocation()
@@ -50,7 +50,7 @@ describe('WeatherOp', () => {
 
     test('a valid location', () => {
       const model = newModel()
-      const op = new WeatherOp()
+      const op = new Weather()
       op.mount(model)
 
       op.setLocation({ location: 'Guadalajara' })
@@ -61,7 +61,7 @@ describe('WeatherOp', () => {
     describe('setting temperature', () => {
       test('async call', async () => {
         const model = newModel()
-        const op = new WeatherOp()
+        const op = new Weather()
         op.mount(model)
 
         op.setLocation({ location: 'Guadalajara' })
@@ -79,7 +79,7 @@ describe('WeatherOp', () => {
 
       test('experimenting with operator composition', () => {
         const model = newModel()
-        const op = new WeatherOp()
+        const op = new Weather()
         op.mount(model)
 
         op.reset()
@@ -91,7 +91,7 @@ describe('WeatherOp', () => {
 
       // test('a valid unit', () => {
       //   const model = newModel()
-      //   const op = new WeatherOp()
+      //   const op = new Weather()
 
       //   op.setUnits(model, { units: 'F' })
 

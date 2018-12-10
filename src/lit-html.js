@@ -1,6 +1,6 @@
 import { Supervisor, Model, Engine } from './index'
 import { NormalMutator as Mutator } from './adapters'
-import { TemperatureOp } from './operators/TemperatureOp'
+import { Temperature } from './operators/Temperature'
 import { ViewModelPresenter } from './ui/lit-html'
 
 const newEngine = function (opTree, data) {
@@ -16,8 +16,8 @@ const newEngine = function (opTree, data) {
   return new Engine(presenter, supervisor, model)
 }
 
-const air = new TemperatureOp()
-const water = new TemperatureOp()
+const air = new Temperature()
+const water = new Temperature()
 const engine = newEngine({ air, water })
 
 engine.reset()

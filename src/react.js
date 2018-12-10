@@ -1,6 +1,6 @@
 import { Engine } from 'alma'
 // import { NormalMutator as Mutator } from './adapters'
-import { TemperatureOp } from './operators/TemperatureOp'
+import { Temperature } from './operators/Temperature'
 import { OpTreePresenter, ViewModelPresenter } from './ui/react'
 
 const newEngine = function (opTree, data) {
@@ -15,8 +15,8 @@ const newEngine = function (opTree, data) {
   return engine
 }
 
-const air = new TemperatureOp()
-const water = new TemperatureOp()
+const air = new Temperature()
+const water = new Temperature()
 const engine = newEngine({ air, water })
 
 engine.reset()

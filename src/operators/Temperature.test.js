@@ -1,5 +1,5 @@
 /* global describe, test, expect */
-import { TemperatureOp } from './TemperatureOp'
+import { Temperature } from './Temperature'
 import { NormalMutator } from 'alma'
 import { operatorConformanceTests } from 'alma/dist/conformance-tests'
 
@@ -26,10 +26,10 @@ function newModel (data = {}, mutator = new NormalMutator()) {
   return model
 }
 
-describe('TemperatureOp', () => {
+describe('Temperature', () => {
   operatorConformanceTests(
     {
-      TemperatureOp: () => new TemperatureOp()
+      Temperature: () => new Temperature()
     },
     describe,
     test,
@@ -39,7 +39,7 @@ describe('TemperatureOp', () => {
   describe('setValue', () => {
     test('defaults', () => {
       const model = newModel()
-      const op = new TemperatureOp()
+      const op = new Temperature()
       op.mount(model)
 
       op.setValue(model)
@@ -49,7 +49,7 @@ describe('TemperatureOp', () => {
 
     test('a valid temperature', () => {
       const model = newModel()
-      const op = new TemperatureOp()
+      const op = new Temperature()
       op.mount(model)
 
       op.setValue({ value: 5 })
@@ -60,7 +60,7 @@ describe('TemperatureOp', () => {
     describe('setUnits', () => {
       test('defaults', () => {
         const model = newModel()
-        const op = new TemperatureOp()
+        const op = new Temperature()
         op.mount(model)
 
         op.setUnits(model)
@@ -70,7 +70,7 @@ describe('TemperatureOp', () => {
 
       test('a valid unit', () => {
         const model = newModel()
-        const op = new TemperatureOp()
+        const op = new Temperature()
         op.mount(model)
 
         op.setUnits({ units: 'F' })
@@ -80,7 +80,7 @@ describe('TemperatureOp', () => {
 
       test('a valid unit with a value converts the value', () => {
         const model = newModel({ units: 'C', value: 0 })
-        const op = new TemperatureOp()
+        const op = new Temperature()
         op.mount(model)
 
         op.setUnits({ units: 'F' })
