@@ -24,11 +24,11 @@ export class Temperature extends Operator {
   }
 
   getValue () {
-    return this.model.get(this.getPath('value'))
+    return this.getModelData(['value'])
   }
 
   getUnits () {
-    return this.model.get(this.getPath('units'))
+    return this.getModelData(['units'])
   }
 
   // nextAction () {

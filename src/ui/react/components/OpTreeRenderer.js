@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react'
-import { traverse } from '../../../sam/functions'
+import { workLeafNodes } from 'alma'
 import { TemperatureEditor } from './TemperatureEditor'
 
 export function OpTreeRenderer (props) {
   const { opTree } = props
 
   let reactComponents = []
-  traverse(
+  workLeafNodes(
     opTree,
     (path, op) => { reactComponents.push(renderOp(op, path)) }
   )

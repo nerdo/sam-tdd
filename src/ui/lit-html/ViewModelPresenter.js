@@ -1,4 +1,4 @@
-import { ViewModelRenderer } from './components'
+import { ViewModelRenderer } from './components/ViewModelRenderer'
 import { render } from 'lit-html'
 
 export class ViewModelPresenter {

@@ -1,26 +1,24 @@
 import { Engine } from 'alma'
-// import { NormalMutator as Mutator } from './adapters'
 import { Temperature } from './operators/Temperature'
-import { OpTreePresenter, ViewModelPresenter } from './ui/react'
+import { ViewModelPresenter } from './ui/react/ViewModelPresenter'
+import { List } from 'alma/dist/ops'
 
 const newEngine = function (opTree, data) {
   const engine = new Engine(new ViewModelPresenter())
   const model = engine.getModel()
-
-  model
-    // .setMutator(mutator)
-    .set([], data)
-    .setOpTree(opTree)
-
+  model.set([], data)
+  model.setOpTree(opTree)
   return engine
 }
 
 const air = new Temperature()
 const water = new Temperature()
-const engine = newEngine({ air, water })
+const list = new List()
+const engine = newEngine({ air, water, list })
 
-engine.reset()
-engine.start()
+engine.reset().start()
+
+list.addItems(List.END, [new Temperature(), new Temperature(), new Temperature()], true)
 
 // Introduce some actions that don't originate from the UI...
 setTimeout(
@@ -33,6 +31,7 @@ setTimeout(
 // Try to force a re-render and see how the UI responds when nothing actually changes...
 setTimeout(
   function () {
+    console.log('Trying to force a re-render by setting the temperature to the same value...')
     air.setValue({ value: 23 })
   },
   4000

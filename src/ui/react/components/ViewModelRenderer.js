@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react'
 import { TemperatureEditor } from './TemperatureEditor'
+import { List } from './List'
 
 export const ViewModelRenderer = React.memo((props) => {
   const { vm } = props
@@ -20,6 +21,11 @@ export const ViewModelRenderer = React.memo((props) => {
         units={vm.water.units}
         onValueChange={useCallback(value => vm.water.intentions.setValue({ value }), ['water'])}
         onUnitsChange={useCallback(units => vm.water.intentions.setUnits({ units }), ['water'])}
+      />
+      <List
+        key="list"
+        order={vm.list.order}
+        items={vm.list.items}
       />
     </React.Fragment>
   )
