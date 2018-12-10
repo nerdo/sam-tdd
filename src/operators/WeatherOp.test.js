@@ -1,6 +1,7 @@
 /* global describe, test, expect */
 import { WeatherOp } from './WeatherOp'
 import { NormalMutator } from 'alma'
+import { operatorConformanceTests } from 'alma/dist/conformance-tests';
 // import { ImmutableMutator } from '../adapters'
 
 function newModel (data = {}, mutator = new NormalMutator()) {
@@ -27,6 +28,15 @@ function newModel (data = {}, mutator = new NormalMutator()) {
 }
 
 describe('WeatherOp', () => {
+  operatorConformanceTests(
+    {
+      WeatherOp: () => new WeatherOp()
+    },
+    describe,
+    test,
+    expect
+  )
+
   describe('setLocation', () => {
     test('defaults', () => {
       const model = newModel()

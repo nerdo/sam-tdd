@@ -1,17 +1,14 @@
 import { convertTemperature } from '../helpers/convertTemperature'
-import { action, defaults, mount } from 'alma'
+import { action, defaults, mount, Operator } from 'alma'
 
-export class TemperatureOp {
-  mount (model, path) {
-    this.model = model
-    this.path = path
-    mount(this, this.model, this.path)
-
+export class TemperatureOp extends Operator {
+  constructor () {
+    super()
     this.setValue = this.setValue.bind(this);
     this.setUnits = this.setUnits.bind(this);
   }
 
-  getPath (...relative) { return (this.path || []).concat(relative) }
+  getOpName () { return 'Temperature' }
 
   reset () {
     this.setValue()
