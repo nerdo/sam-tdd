@@ -3,9 +3,9 @@ import { Nested } from './Nested';
 
 export const Something = React.memo(() => {
   return (
-    <React.Fragment>
+    <span className="something">
       <span> SOMETHING </span>
       <Nested />
-    </React.Fragment>
+    </span>
   )
 })
