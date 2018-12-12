@@ -26,6 +26,8 @@ export const ViewModelRenderer = React.memo((props) => {
         key="list"
         order={vm.list.order}
         items={vm.list.items}
+        onAddTemperature={useCallback(index => vm.list.intentions.addTemperature(index), ['list'])}
+        onMoveItem={useCallback((fromIndex, toIndex) => vm.list.intentions.moveItem(fromIndex, toIndex), ['list'])}
       />
     </React.Fragment>
   )
