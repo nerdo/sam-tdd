@@ -37,11 +37,11 @@ const Button = React.memo((props) => {
 
 export const List = React.memo((props) => {
   const { order, items } = props
-  const components = order
+  const components = (order || [])
     .map((id, index) => ({ item: items[id], index }))
     .map((current, index) => {
       let component
-      if (current.item.type === 'Temperature' && current.item.id) {
+      if (typeof current.item !== 'undefined' && current.item.type === 'Temperature' && current.item.id) {
         const { data: temperature } = current.item
         component = (
           <TemperatureEditor

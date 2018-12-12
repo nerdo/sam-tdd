@@ -1,13 +1,17 @@
 import Immutable from 'seamless-immutable'
+import mergers from 'seamless-immutable-mergers'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { ViewModelRenderer } from './components/ViewModelRenderer'
 import { Temperature } from '../../operators/Temperature'
 import { List } from 'alma/dist/ops'
 
+const EMPTY_OBJECT = {}
+
 export class ViewModelPresenter {
   constructor () {
     this.viewModel = { }
+    this.intentions = new WeakMap()
   }
 
   getRepresentation (model) {
@@ -21,12 +25,14 @@ export class ViewModelPresenter {
         water: this.temperatureVM(opTree.water),
         list: this.listVM(opTree.list)
       },
-      { deep: true }
+      { deep: true, merger: mergers.equalityArrayMerger }
     )
 
     console.log(updatedViewModel === this.viewModel)
 
-    return updatedViewModel
+    this.viewModel = updatedViewModel
+
+    return this.viewModel
   }
 
   temperatureVM (temperature) {
@@ -42,6 +48,21 @@ export class ViewModelPresenter {
   }
 
   listVM (list) {
+    if (!this.intentions.get(list)) {
+      this.intentions.set(
+        list,
+        {
+          addTemperature: (index = List.END) => list.addItems(index, [new Temperature()], true),
+          moveItem: (fromIndex, toIndex) => {
+            const id = list.getOrder()[fromIndex]
+            const op = list.getItemById(id)
+            if (!op) { return }
+            list.moveItems([op], toIndex)
+          }
+        }
+      )
+    }
+
     return {
       order: list.getOrder(),
       items: list.getOrder()
@@ -62,15 +83,7 @@ export class ViewModelPresenter {
           },
           {}
         ),
-      intentions: {
-        addTemperature: (index = List.END) => list.addItems(index, [new Temperature()], true),
-        moveItem: (fromIndex, toIndex) => {
-          const id = list.getOrder()[fromIndex]
-          const op = list.getItemById(id)
-          if (!op) { return }
-          list.moveItems([op], toIndex)
-        }
-      }
+      intentions: this.intentions.get(list)
     }
   }
 
