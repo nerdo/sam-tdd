@@ -35,6 +35,8 @@ const Button = React.memo((props) => {
   return button
 })
 
+const intentions = new WeakMap()
+
 export const List = React.memo((props) => {
   const { order, items } = props
   const components = (order || [])
@@ -43,13 +45,21 @@ export const List = React.memo((props) => {
       let component
       if (typeof current.item !== 'undefined' && current.item.type === 'Temperature' && current.item.id) {
         const { data: temperature } = current.item
+        if (!intentions.get(temperature.intentions.setValue)) {
+          intentions.set(
+            temperature.intentions.setValue,
+            {
+              setValue: (value) => temperature.intentions.setValue({ value }),
+              setUnits: (units) => temperature.intentions.setUnits({ units })
+            }
+          )
+        }
         component = (
           <TemperatureEditor
-            key={current.item.id}
             value={temperature.value}
             units={temperature.units}
-            onValueChange={(value) => temperature.intentions.setValue({ value })}
-            onUnitsChange={(units) => temperature.intentions.setUnits({ units })}
+            onValueChange={intentions.get(temperature.intentions.setValue).setValue}
+            onUnitsChange={intentions.get(temperature.intentions.setValue).setUnits}
           />
         )
       }
@@ -79,9 +89,6 @@ export const List = React.memo((props) => {
         <Item
           id={item.id}
           key={item.id}
-          // onAddAfter={useCallback(() => addTemperatureItem(item.index + 1), [item.index])}
-          // onMoveUp={!item.isFirst ? useCallback(() => moveItem(item.index, item.index - 1), [item.isFirst, item.index]) : void 0}
-          // onMoveDown={!item.isLast ? useCallback(() => moveItem(item.index, item.index + 1), [item.isLast, item.index]) : void 0}
           onAddAfter={() => addTemperatureItem(index + 1)}
           onMoveUp={!isFirst ? () => moveItem(index, index - 1) : void 0}
           onMoveDown={!isLast ? () => moveItem(index, index + 1) : void 0}
