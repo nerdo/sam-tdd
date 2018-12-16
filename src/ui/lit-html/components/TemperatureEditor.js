@@ -13,7 +13,6 @@ export const TemperatureEditor = (props) => {
 
   function unitsChange (e) {
     if (props.onUnitsChange) {
-      console.log('units', e)
       props.onUnitsChange(e.target.value)
     }
   }
