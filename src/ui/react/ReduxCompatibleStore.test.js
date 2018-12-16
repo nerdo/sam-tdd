@@ -38,16 +38,23 @@ describe('ReduxCompatibleStore', () => {
 
       expect(result).toBe(action)
     })
-
   })
 
   test('setting and retrieving state', () => {
     const store = new ReduxCompatibleStore()
-    const state = {}
+    const state = {
+      hello: 1,
+      world: {
+        foo: [1, 2, 3],
+        bar: false
+      }
+    }
+    store.dispatch = jest.fn()
 
     store.setState(state)
     const result = store.getState()
 
     expect(result).toBe(state)
+    expect(store.dispatch).toBeCalledTimes(1)
   })
 })

@@ -21,6 +21,10 @@ export class ReduxCompatibleStore {
   }
 
   setState (state) {
+    // In Redux, state is updated by dispatching an action, which results in (1) updating the state via reducers, and
+    // (2) notifying listeners with the new state. In our implementation, dispatch just notifies listeners (2).
+    // setState simulates updating the state via reducers (1).
     this.state = state
+    this.dispatch({})
   }
 }
