@@ -2,24 +2,32 @@ import Immutable from 'seamless-immutable'
 import mergers from 'seamless-immutable-mergers'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { ViewModelRenderer } from './components/ViewModelRenderer'
+import { Provider } from 'react-redux'
+import { ConnectedViewModelRenderer } from './components/ConnectedViewModelRenderer'
 import { Temperature } from '../../operators/Temperature'
 import { List } from 'alma/dist/ops'
-
-const EMPTY_OBJECT = {}
+import { ReduxCompatibleStore } from './ReduxCompatibleStore'
 
 export class ViewModelPresenter {
   constructor () {
-    this.viewModel = { }
     this.intentions = new WeakMap()
+    this.store = new ReduxCompatibleStore()
+    this.store.setState({})
+
+    const tree = (
+      <Provider store={this.store}>
+        <ConnectedViewModelRenderer />
+      </Provider>
+    )
+    ReactDOM.render(tree, document.getElementById('app'))
   }
 
   getRepresentation (model) {
     // If something changes in the model structure, this should be the *only* place that needs modification
     // if we map what we need into our own view model...
     const opTree = model.getOpTree()
-    const updatedViewModel = Immutable.merge(
-      this.viewModel,
+    return Immutable.merge(
+      this.store.getState(),
       {
         air: this.temperatureVM(opTree.air),
         water: this.temperatureVM(opTree.water),
@@ -27,12 +35,6 @@ export class ViewModelPresenter {
       },
       { deep: true, merger: mergers.equalityArrayMerger }
     )
-
-    console.log(updatedViewModel === this.viewModel)
-
-    this.viewModel = updatedViewModel
-
-    return this.viewModel
   }
 
   temperatureVM (temperature) {
@@ -44,7 +46,6 @@ export class ViewModelPresenter {
         setUnits: temperature.setUnits
       }
     }
-    return this.viewModel
   }
 
   listVM (list) {
@@ -87,7 +88,7 @@ export class ViewModelPresenter {
     }
   }
 
-  render (viewModel) {
-    ReactDOM.render(<ViewModelRenderer vm={viewModel} />, document.getElementById('app'))
+  render (updatedViewModel) {
+    this.store.setState(updatedViewModel)
   }
 }

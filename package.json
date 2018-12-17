@@ -15,9 +15,12 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "^7.2.0",
     "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
+    "implements-interface": "0.0.3",
     "jest": "^23.6.0",
+    "redux": "^4.0.1",
     "regenerator-runtime": "^0.13.1",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2"
@@ -28,6 +31,9 @@
     "lodash": "^4.17.11",
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.7.0-alpha.2",
-    "seamless-immutable": "^7.1.4"
+    "react-redux": "^6.0.0",
+    "seamless-immutable": "^7.1.4",
+    "seamless-immutable-mergers": "^7.1.0",
+    "symbol-observable": "^1.2.0"
   }
 }
